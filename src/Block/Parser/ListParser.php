@@ -36,12 +36,17 @@ class ListParser extends AbstractBlockParser
             return false;
         }
 
+        $indent = $cursor->getIndent();
+        if ($indent >= 4) {
+            return false;
+        }
+
         $tmpCursor = clone $cursor;
         $tmpCursor->advanceToNextNonSpaceOrTab();
         $rest = $tmpCursor->getRemainder();
 
         $data = new ListData();
-        $data->markerOffset = $cursor->getIndent();
+        $data->markerOffset = $indent;
 
         if (preg_match('/^[*+-]/', $rest) === 1) {
             $data->type = ListBlock::TYPE_UNORDERED;
