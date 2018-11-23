@@ -14,6 +14,8 @@
 
 namespace League\CommonMark;
 
+use Webuni\CommonMark\TableExtension\TableExtension;
+
 /**
  * Converts CommonMark-compatible Markdown to HTML.
  */
@@ -36,6 +38,7 @@ class CommonMarkConverter extends Converter
     {
         if ($environment === null) {
             $environment = Environment::createCommonMarkEnvironment();
+            $environment->addExtension(new TableExtension());
         }
 
         $environment->mergeConfig($config);
